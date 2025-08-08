@@ -1,4 +1,4 @@
-import { initMessageBroker } from './services/messageBroker.js';
+import { initMessageBroker } from './infrastructure/messageBroker.js';
 
 const start = async () => {
     try {

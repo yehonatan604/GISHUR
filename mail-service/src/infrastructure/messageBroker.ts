@@ -1,6 +1,6 @@
 import amqp, { ConsumeMessage } from 'amqplib';
 import { envService } from '../services/env.service.js';
-import { sendMail } from '../infrastructure/mailer.js';
+import { sendMail } from './mailer.js';
 import { resetPasswordMail } from '../mails/resetPassword.mail.js';
 import { manyAttemptsMail } from '../mails/manyAttempts.mail.js';
 import { forgotPasswordrMail } from '../mails/forgotPassword.mail.js';
