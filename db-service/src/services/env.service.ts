@@ -17,7 +17,8 @@ class EnvService {
     get vars(): EnvVars {
         const vars = {
             MESSAGE_BROKER_URL: env.MESSAGE_BROKER_URL,
-            DB_URL: env.DB_URL
+            DB_URL: env.DB_URL,
+            DEV_MODE: env.DEV_MODE === 'true'
         } as EnvVars;
 
         for (const [key, val] of Object.entries(vars)) {

@@ -16,7 +16,8 @@ async function startEngine() {
         await caseService.initQueue(); // Initialize the case queue
         caseService.publishCase({ // Publish a sample case
             caseId: 'case-001',
-            userId: 'user-123',
+            user1: '68959594ca8706a2a51b7467',
+            user2: '68959594ca8706a2a51b7467',
             timestamp: Date.now(),
             sideA: {
                 title: 'Vacation in Hawaii',

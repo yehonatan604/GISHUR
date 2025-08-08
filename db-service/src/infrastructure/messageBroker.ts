@@ -1,6 +1,6 @@
 import amqp, { ConsumeMessage } from 'amqplib';
-import { handleDbAction } from '../services/dbHandler.service';
-import { envService } from '../services/env.service';
+import { handleDbAction } from '../services/dbHandler.service.js';
+import { envService } from '../services/env.service.js';
 
 const QUEUE = 'db_action_queue';
 

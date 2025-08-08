@@ -1,6 +1,6 @@
 import amqp, { ConsumeMessage } from 'amqplib';
-import { envService } from '../services/env.service';
-import { handleDbAction } from '../services/dbHandler.service';
+import { envService } from '../services/env.service.js';
+import { handleDbAction } from '../services/dbHandler.service.js';
 
 export const startConsumer = async () => {
     const connection = await amqp.connect(envService.vars.MESSAGE_BROKER_URL);
