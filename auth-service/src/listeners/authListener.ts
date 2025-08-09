@@ -1,12 +1,14 @@
-import { ConsumeMessage } from 'amqplib';
+import { ConsumeMessage, Channel } from 'amqplib';
 import { verifyPassword } from '../services/hash.service.js';
 import { generateToken } from '../services/jwt.service.js';
 import { requestUserFromDb } from '../services/dbRequest.service.js';
-import { Channel } from 'amqplib';
-
+import { envService } from '../services/env.service.js';
+import amqp from 'amqplib';
 const QUEUE = 'auth_action_queue';
 
-export const initAuthListener = async (channel: Channel) => {
+export const initAuthListener = async () => {
+    const conn = await amqp.connect(envService.vars.MESSAGE_BROKER_URL!);
+    const channel = await conn.createChannel();
     await channel.assertQueue(QUEUE, { durable: true });
     console.log(`🔐 Listening to "${QUEUE}"`);
 
@@ -14,44 +16,41 @@ export const initAuthListener = async (channel: Channel) => {
         if (!msg) return;
 
         try {
+            console.log(msg);
+
             const { type, email, password } = JSON.parse(msg.content.toString());
 
             if (type !== 'login') {
-                channel.nack(msg, false, false);
+                // ignore unknown types, but ACK so it doesn't stick
                 return;
             }
 
-            const user = await requestUserFromDb(channel, email, msg.properties.correlationId);
+            const user = await requestUserFromDb(channel, email);
+            console.log(user);
 
-            if (!user || typeof user.passwordHash !== 'string') {
+            if (!user || typeof user.password !== 'string') {
                 sendReply(channel, msg, { error: 'User not found' });
-                return;
+            } else {
+                const isValid = await verifyPassword(password, user.password);
+                if (!isValid) {
+                    sendReply(channel, msg, { error: 'Invalid password' });
+                } else {
+                    const token = generateToken(user._id);
+                    sendReply(channel, msg, { token });
+                }
             }
-
-            const isValid = await verifyPassword(password, user.passwordHash);
-            if (!isValid) {
-                sendReply(channel, msg, { error: 'Invalid password' });
-                return;
-            }
-
-            const token = generateToken(user._id);
-            sendReply(channel, msg, { token });
-
         } catch (err) {
             console.error('❌ auth.listener error:', err);
-            channel.nack(msg, false, false);
+            // optionally send a generic error back:
+            try { sendReply(channel, msg!, { error: 'Internal error' }); } catch { }
+        } finally {
+            try { channel.ack(msg!); } catch (e) { /* channel might be closed if earlier bug */ }
         }
-
-        channel.ack(msg);
     });
 };
 
 const sendReply = (channel: Channel, msg: ConsumeMessage, payload: any) => {
-    if (!msg.properties.replyTo || !msg.properties.correlationId) return;
-
-    channel.sendToQueue(
-        msg.properties.replyTo,
-        Buffer.from(JSON.stringify(payload)),
-        { correlationId: msg.properties.correlationId }
-    );
+    const { replyTo, correlationId } = msg.properties;
+    if (!replyTo || !correlationId) return;
+    channel.sendToQueue(replyTo, Buffer.from(JSON.stringify(payload)), { correlationId });
 };
