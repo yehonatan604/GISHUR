@@ -1,0 +1,15 @@
+{
+	"name": "bridgepoint-monorepo",
+	"private": true,
+	"packageManager": "pnpm@10.14.0",
+	"scripts": {
+		"dev:infra": "docker compose --profile infra up -d",
+		"down:infra": "docker compose --profile infra down",
+		"dev": "turbo run dev --parallel"
+	},
+	"devDependencies": {
+		"tsx": "^4.20.3",
+		"turbo": "^2.5.5",
+		"typescript": "^5.9.2"
+	}
+}
