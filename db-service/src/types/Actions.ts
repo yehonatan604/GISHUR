@@ -1,7 +1,7 @@
 import type { FilterQuery, UpdateQuery } from 'mongoose';
 import type { CollectionMap } from './Collections';
 
-export type DbAction = 'ping' | 'insert' | 'find' | 'update' | 'delete';
+export type DbAction = 'ping' | 'insert' | 'find' | 'update' | 'delete' | 'findOne';
 
 export type ActionInputMap = {
     ping: undefined;
@@ -9,6 +9,9 @@ export type ActionInputMap = {
         [K in keyof CollectionMap]: { collection: K; payload: CollectionMap[K] }
     }[keyof CollectionMap];
     find: {
+        [K in keyof CollectionMap]: { collection: K; payload: FilterQuery<CollectionMap[K]> }
+    }[keyof CollectionMap];
+    findOne: {
         [K in keyof CollectionMap]: { collection: K; payload: FilterQuery<CollectionMap[K]> }
     }[keyof CollectionMap];
     update: {

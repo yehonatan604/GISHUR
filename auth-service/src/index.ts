@@ -1,4 +1,4 @@
-import { initAuthListener } from "./listeners/authListener.js";
+import { initAuthListener } from "./infrastructure/messageBroker.js";
 
 (async () => {
     try {

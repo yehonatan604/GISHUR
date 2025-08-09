@@ -26,8 +26,15 @@ export const handleDbAction = async (input: DbActionInput): Promise<any> => {
         case 'find': {
             const { collection, payload } = input;
             console.log('🔍 DB Find query:', payload);
-            const res = await (models[collection] as any).findOne(payload);
+            const res = await (models[collection] as any).find(payload);
             console.log('📦 DB Find result:', res);
+            return res;
+        }
+        case 'findOne': {
+            const { collection, payload } = input;
+            console.log('🔍 DB FindOne query:', payload);
+            const res = await (models[collection] as any).findOne(payload);
+            console.log('📦 DB FindOne result:', res);
             return res;
         }
         case 'update': {

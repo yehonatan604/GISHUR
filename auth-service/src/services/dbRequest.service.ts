@@ -34,7 +34,7 @@ export async function requestUserFromDb(
 
         ch.sendToQueue(
             'db_action_queue',
-            Buffer.from(JSON.stringify({ action: 'find', collection: 'users', payload: { email } })),
+            Buffer.from(JSON.stringify({ action: 'findOne', collection: 'users', payload: { email } })),
             { replyTo: replyQ, correlationId: cid }
         );
     });
