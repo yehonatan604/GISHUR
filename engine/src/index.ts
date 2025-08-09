@@ -1,10 +1,7 @@
-import dotenv from 'dotenv';
 import { cache } from './infrastructure/cache.js';
 import { caseService } from './services/case.service.js';
 
-dotenv.config();
-
-async function startEngine() {
+const startEngine = async () => {
     try {
         // Redis
         await cache.set('hello', 'world');
