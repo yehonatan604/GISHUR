@@ -1,7 +1,7 @@
 import { createClient } from 'redis';
-import { envService } from '../services/env.service.js';
+import { env } from '../env.js';
 
-const { CACHE_URL: url } = envService.vars;
+const { CACHE_URL: url } = env;
 
 const redis = createClient({ url });
 redis.on('error', (err) => console.error('❌ Redis error:', err));

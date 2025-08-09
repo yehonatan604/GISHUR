@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@bridgepoint/env": "workspace:*",
     "@types/amqplib": "^0.10.7",
     "amqplib": "^0.10.8",
     "dotenv": "^17.2.1",

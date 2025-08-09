@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import { envService } from "./env.service.js";
 import { SecretTypes } from "../types/SecretTypes.js";
+import { env } from "../env.js";
 
-const { JWT_SECRET, MAIL_SECRET, PASSWORD_RESET_KEY, SECURITY_KEY } = envService.vars;
+const { JWT_SECRET, MAIL_SECRET, PASSWORD_RESET_KEY, SECURITY_KEY } = env;
 
 const getSecret = (type: SecretTypes = "auth"): string => {
     switch (type) {

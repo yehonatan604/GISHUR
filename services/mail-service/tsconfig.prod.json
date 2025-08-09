@@ -2,12 +2,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "noEmit": false,
-        "outDir": "./dist",
         "declaration": false,
-        "module": "esnext",
-        "moduleResolution": "bundler"
-    },
-    "include": [
-        "src"
-    ]
+        "sourceMap": false,
+        "outDir": "dist"
+    }
 }

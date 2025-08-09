@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { UserModel } from '../models/User.model.js';
 
 export const seedUsers = async () => {

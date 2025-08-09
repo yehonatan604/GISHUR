@@ -1,9 +1,9 @@
 import amqp, { ConsumeMessage } from 'amqplib';
-import { envService } from '../services/env.service.js';
 import { UserModel } from '../models/User.model.js';
+import { env } from '../env.js';
 
 export const startConsumer = async () => {
-    const connection = await amqp.connect(envService.vars.MESSAGE_BROKER_URL);
+    const connection = await amqp.connect(env.MESSAGE_BROKER_URL);
     const channel = await connection.createChannel();
     const QUEUE = 'db_action_queue';
 

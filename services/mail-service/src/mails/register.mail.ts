@@ -1,6 +1,6 @@
-import { envService } from "../services/env.service.js";
+import { env } from "../env.js";
 import { FullName } from "../types/FullName.js";
-const { API_URL } = envService.vars;
+const { API_URL } = env;
 
 export const registerMail = (email: string, name: FullName, token: string) => {
     return {

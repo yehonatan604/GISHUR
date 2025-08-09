@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev:infra": "docker compose --profile infra up -d",
 		"down:infra": "docker compose --profile infra down",
-		"dev": "turbo run dev --parallel"
+		"dev": "turbo run dev --parallel",
+		"build": "turbo run build"
 	},
 	"devDependencies": {
 		"tsx": "^4.20.3",

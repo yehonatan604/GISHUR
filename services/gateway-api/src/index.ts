@@ -1,11 +1,11 @@
 import express from 'express';
-import { envService } from './services/env.service.js';
 import { appRouter } from './router/app.routes.js';
 import { badPathHandler, errorHandler } from './middlewares/errors.mw.js';
 import { channel } from './infrastructure/messageBroker.js';
+import { env } from './env.js';
 
 const app = express();
-const PORT = envService.vars.PORT;
+const { PORT } = env;
 
 app.use(express.json());
 app.use(appRouter);

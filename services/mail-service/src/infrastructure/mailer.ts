@@ -1,6 +1,6 @@
 import nodemailer, { Transporter, SendMailOptions } from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
-import { envService } from "../services/env.service.js";
+import SMTPTransport from "nodemailer/lib/smtp-transport/index.js";
+import { env } from "../env.js";
 
 const {
     MAIL_HOST,
@@ -8,7 +8,7 @@ const {
     MAIL_PORT,
     MAIL_PROVIDER,
     MAIL_USER,
-} = envService.vars;
+} = env;
 
 const transporter: Transporter<SMTPTransport.SentMessageInfo> =
     nodemailer.createTransport({

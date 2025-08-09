@@ -1,16 +1,16 @@
 import amqp, { ConsumeMessage } from 'amqplib';
-import { envService } from '../services/env.service.js';
 import { sendMail } from './mailer.js';
 import { resetPasswordMail } from '../mails/resetPassword.mail.js';
 import { manyAttemptsMail } from '../mails/manyAttempts.mail.js';
 import { forgotPasswordrMail } from '../mails/forgotPassword.mail.js';
 import { registerMail } from '../mails/register.mail.js';
 import { MailFunction, ResetPasswordMailFunction } from '../types/MailFunction.js';
+import { env } from '../env.js';
 
 const QUEUE = 'send_mail_queue';
 
 export const initMessageBroker = async () => {
-    const conn = await amqp.connect(envService.vars.MESSAGE_BROKER_URL!);
+    const conn = await amqp.connect(env.MESSAGE_BROKER_URL!);
     const channel = await conn.createChannel();
 
     await channel.assertQueue(QUEUE, { durable: true });

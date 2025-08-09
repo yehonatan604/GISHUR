@@ -2,13 +2,13 @@ import { ConsumeMessage, Channel } from 'amqplib';
 import { verifyPassword } from '../services/hash.service.js';
 import { generateToken } from '../services/jwt.service.js';
 import { requestUserFromDb } from '../services/dbRequest.service.js';
-import { envService } from '../services/env.service.js';
+import { env } from '../env.js';
 import amqp from 'amqplib';
 
 const QUEUE = 'auth_action_queue';
 
 export const initAuthListener = async () => {
-    const conn = await amqp.connect(envService.vars.MESSAGE_BROKER_URL!);
+    const conn = await amqp.connect(env.MESSAGE_BROKER_URL!);
     const channel = await conn.createChannel();
     await channel.assertQueue(QUEUE, { durable: true });
     console.log(`🔐 Listening to "${QUEUE}"`);

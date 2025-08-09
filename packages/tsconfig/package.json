@@ -1,0 +1,6 @@
+{
+    "name": "@bridgepoint/tsconfig",
+    "version": "1.0.0",
+    "private": true,
+    "tsconfig": "tsconfig.base.json"
+}

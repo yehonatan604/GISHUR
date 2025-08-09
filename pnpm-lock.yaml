@@ -18,8 +18,26 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
+  packages/env:
+    dependencies:
+      dotenv:
+        specifier: ^16.6.1
+        version: 16.6.1
+      zod:
+        specifier: ^3.25.76
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.9.2
+        version: 5.9.2
+
+  packages/tsconfig: {}
+
   services/auth-service:
     dependencies:
+      '@bridgepoint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@types/amqplib':
         specifier: ^0.10.7
         version: 0.10.7
@@ -51,6 +69,9 @@ importers:
 
   services/db-service:
     dependencies:
+      '@bridgepoint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       amqplib:
         specifier: ^0.10.8
         version: 0.10.8
@@ -79,6 +100,9 @@ importers:
 
   services/engine:
     dependencies:
+      '@bridgepoint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       amqplib:
         specifier: ^0.10.8
         version: 0.10.8
@@ -113,6 +137,9 @@ importers:
 
   services/gateway-api:
     dependencies:
+      '@bridgepoint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@types/amqplib':
         specifier: ^0.10.7
         version: 0.10.7
@@ -150,6 +177,9 @@ importers:
 
   services/mail-service:
     dependencies:
+      '@bridgepoint/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@types/amqplib':
         specifier: ^0.10.7
         version: 0.10.7
@@ -591,6 +621,10 @@ packages:
   diff@4.0.2:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
+
+  dotenv@16.6.1:
+    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+    engines: {node: '>=12'}
 
   dotenv@17.2.1:
     resolution: {integrity: sha512-kQhDYKZecqnM0fCnzI5eIv5L4cAe/iRI+HqMbO/hbRdTAeXDG+M9FjipUxNfbARuEg4iHIbhnhs78BCHNbSxEQ==}
@@ -1158,6 +1192,9 @@ packages:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
     engines: {node: '>=6'}
 
+  zod@3.25.76:
+    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
 snapshots:
 
   '@cspotcode/source-map-support@0.8.1':
@@ -1481,6 +1518,8 @@ snapshots:
   depd@2.0.0: {}
 
   diff@4.0.2: {}
+
+  dotenv@16.6.1: {}
 
   dotenv@17.2.1: {}
 
@@ -2089,3 +2128,5 @@ snapshots:
   xtend@4.0.2: {}
 
   yn@3.1.1: {}
+
+  zod@3.25.76: {}
