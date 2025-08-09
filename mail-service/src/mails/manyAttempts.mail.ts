@@ -1,5 +1,5 @@
-import { envService } from "../services/env.service";
-import { FullName } from "../types/FullName";
+import { envService } from "../services/env.service.js";
+import { FullName } from "../types/FullName.js";
 const { API_URL } = envService.vars;
 
 export const manyAttemptsMail = (email: string, name: FullName, token: string) => {

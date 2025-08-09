@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { catchAsync } from "../middlewares/catchAsync.mw";
+import { catchAsync } from "../middlewares/catchAsync.mw.js";
+import { channel } from "../infrastructure/messageBroker.js";
 
 const authRouter = Router();
 
@@ -9,7 +10,8 @@ authRouter.post("/", catchAsync(async (req, res) => {
 
 authRouter.post("/login", catchAsync(async (req, res) => {
     const { email, password } = req.body;
-    res.status(200).json({ email, password });
+    const token = channel.sendToQueue('db_action_queue', Buffer.from(JSON.stringify({ email, password })));
+    res.status(200).json(token);
 }));
 
 authRouter.get("/:id", catchAsync(async (req, res) => {

@@ -1,5 +1,5 @@
 import amqp from 'amqplib';
-import { hashPassword } from './hash.service';
+import { hashPassword } from './hash.service.js';
 import { randomUUID } from 'crypto';
 
 export class AuthActionsService {

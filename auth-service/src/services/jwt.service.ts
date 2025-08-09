@@ -1,6 +1,6 @@
 import * as jwt from "jsonwebtoken";
-import { envService } from "./env.service";
-import { SecretTypes } from "../types/SecretTypes";
+import { envService } from "./env.service.js";
+import { SecretTypes } from "../types/SecretTypes.js";
 
 const { JWT_SECRET, MAIL_SECRET, PASSWORD_RESET_KEY, SECURITY_KEY } = envService.vars;
 

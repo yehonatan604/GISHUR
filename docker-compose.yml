@@ -29,6 +29,73 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
 
+  gateway-api:
+    build:
+      context: ./gateway-api
+      dockerfile: Dockerfile
+    container_name: gateway-api
+    ports:
+      - "8181:8181"
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      - MESSAGE_BROKER_URL=amqp://admin:admin@rabbitmq:5672
+
+  engine:
+    build:
+      context: ./engine
+      dockerfile: Dockerfile
+    container_name: engine
+    ports:
+      - "8182:8182"
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      - MESSAGE_BROKER_URL=amqp://admin:admin@rabbitmq:5672
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8183:8183"
+    depends_on:
+      - redis
+      - rabbitmq
+    environment:
+      - MESSAGE_BROKER_URL=amqp://admin:admin@rabbitmq:5672
+
+  db-service:
+    build:
+      context: ./db-service
+      dockerfile: Dockerfile
+    container_name: db-service
+    ports:
+      - "8184:8184"
+    depends_on:
+      - redis
+      - rabbitmq
+      - mongodb
+    environment:
+      - MESSAGE_BROKER_URL=amqp://admin:admin@rabbitmq:5672
+      - MONGODB_URL=mongodb://mongodb:27017
+      - REDIS_URL=redis://redis:6379
+
+  mail-service:
+    build:
+      context: ./mail-service
+      dockerfile: Dockerfile
+    container_name: mail-service
+    ports:
+      - "8185:8185"
+    depends_on:
+      - rabbitmq
+    environment:
+      - MESSAGE_BROKER_URL=amqp://admin:admin@rabbitmq:5672
+
 volumes:
   redis_data:
   mongo_data:

@@ -1,5 +1,5 @@
-import { initMessageBroker } from "./infrastructure/messageBroker";
-import { initAuthListener } from "./listeners/authListener";
+import { initMessageBroker } from "./infrastructure/messageBroker.js";
+import { initAuthListener } from "./listeners/authListener.js";
 
 (async () => {
     try {

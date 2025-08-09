@@ -1,4 +1,4 @@
-import { FullName } from "../types/FullName";
+import { FullName } from "../types/FullName.js";
 
 export const resetPasswordMail = (email: string, name: FullName, newPassword: string) => {
     return {

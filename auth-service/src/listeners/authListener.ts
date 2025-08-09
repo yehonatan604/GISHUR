@@ -1,7 +1,7 @@
 import { ConsumeMessage } from 'amqplib';
-import { verifyPassword } from '../services/hash.service';
-import { generateToken } from '../services/jwt.service';
-import { requestUserFromDb } from '../services/dbRequest.service';
+import { verifyPassword } from '../services/hash.service.js';
+import { generateToken } from '../services/jwt.service.js';
+import { requestUserFromDb } from '../services/dbRequest.service.js';
 import { Channel } from 'amqplib';
 
 const QUEUE = 'auth_action_queue';
