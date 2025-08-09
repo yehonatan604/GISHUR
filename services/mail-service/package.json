@@ -1,5 +1,5 @@
 {
-  "name": "bridgepoint-mail-service",
+  "name": "@bridgepoint/mail-service",
   "version": "0.1.0",
   "main": "src/index.ts",
   "type": "module",

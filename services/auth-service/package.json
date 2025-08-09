@@ -1,5 +1,5 @@
 {
-  "name": "bridgepoint-auth-service",
+  "name": "@bridgepoint/auth-service",
   "version": "0.1.0",
   "main": "src/index.ts",
   "type": "module",
