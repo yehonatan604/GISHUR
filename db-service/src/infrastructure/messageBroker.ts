@@ -1,32 +1,56 @@
 import amqp, { ConsumeMessage } from 'amqplib';
-import { handleDbAction } from '../services/dbHandler.service.js';
 import { envService } from '../services/env.service.js';
+import { UserModel } from '../models/User.model.js';
 
-const QUEUE = 'db_action_queue';
+export const startConsumer = async () => {
+    const connection = await amqp.connect(envService.vars.MESSAGE_BROKER_URL);
+    const channel = await connection.createChannel();
+    const QUEUE = 'db_action_queue';
 
-export const initMessageBroker = async () => {
-    const conn = await amqp.connect(envService.vars.MESSAGE_BROKER_URL!);
-    const ch = await conn.createChannel();
+    await channel.assertQueue(QUEUE, { durable: true });
+    console.log(`✅ Listening to ${QUEUE}`);
 
-    await ch.assertQueue(QUEUE, { durable: true });
-    console.log(`📩 Listening to "${QUEUE}"`);
-
-    ch.consume(QUEUE, async (msg: ConsumeMessage | null) => {
+    channel.consume(QUEUE, async (msg: ConsumeMessage | null) => {
         if (!msg) return;
 
         try {
-            const content = JSON.parse(msg.content.toString());
+            const { replyTo, correlationId } = msg.properties;
+            const bodyStr = msg.content.toString();
+            console.log('📥 DB command:', bodyStr, { correlationId, replyTo });
 
-            const result = await handleDbAction(content);
+            const { action, collection, payload } = JSON.parse(bodyStr);
 
-            if (content.replyTo) {
-                ch.sendToQueue(content.replyTo, Buffer.from(JSON.stringify(result)));
+            if ((action === 'findOne') && collection === 'users') {
+                const doc = await UserModel.findOne(payload).lean().maxTimeMS(2500);
+                const user = doc ? { _id: doc._id, password: doc.password } : null;
+
+                if (replyTo && correlationId) {
+                    const res = JSON.stringify({ user });
+                    console.log('↩️ DB -> reply', { correlationId, hasUser: !!user, len: res.length });
+                    channel.sendToQueue(replyTo, Buffer.from(res), { correlationId });
+                } else {
+                    console.error('❌ Missing replyTo/correlationId');
+                }
+            } else {
+                // תחזיר גם במקרה שלא נתמך, כדי שה-auth לא יטיים־אאוט
+                if (replyTo && correlationId) {
+                    channel.sendToQueue(replyTo, Buffer.from(JSON.stringify({ error: 'Unsupported action' })), { correlationId });
+                }
             }
 
-            ch.ack(msg);
-        } catch (err) {
-            console.error('❌ Message handling error:', err);
-            ch.nack(msg, false, false);
+            channel.ack(msg);
+        } catch (err: any) {
+            console.error('❌ Error handling DB command:', err?.message || err);
+            // 🔴 אל תעשה nack בלי תשובה — תחזיר שגיאה ואז ack
+            try {
+                const { replyTo, correlationId } = msg!.properties;
+                if (replyTo && correlationId) {
+                    channel.sendToQueue(replyTo, Buffer.from(JSON.stringify({ error: 'DB error' })), { correlationId });
+                }
+            } finally {
+                channel.ack(msg!);
+            }
         }
     });
+
 };

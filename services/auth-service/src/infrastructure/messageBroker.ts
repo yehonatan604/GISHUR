@@ -4,6 +4,7 @@ import { generateToken } from '../services/jwt.service.js';
 import { requestUserFromDb } from '../services/dbRequest.service.js';
 import { envService } from '../services/env.service.js';
 import amqp from 'amqplib';
+
 const QUEUE = 'auth_action_queue';
 
 export const initAuthListener = async () => {
@@ -16,8 +17,6 @@ export const initAuthListener = async () => {
         if (!msg) return;
 
         try {
-            console.log(msg);
-
             const { type, email, password } = JSON.parse(msg.content.toString());
 
             if (type !== 'login') {
@@ -26,7 +25,6 @@ export const initAuthListener = async () => {
             }
 
             const user = await requestUserFromDb(channel, email);
-            console.log(user);
 
             if (!user || typeof user.password !== 'string') {
                 sendReply(channel, msg, { error: 'User not found' });
@@ -41,7 +39,6 @@ export const initAuthListener = async () => {
             }
         } catch (err) {
             console.error('❌ auth.listener error:', err);
-            // optionally send a generic error back:
             try { sendReply(channel, msg!, { error: 'Internal error' }); } catch { }
         } finally {
             try { channel.ack(msg!); } catch (e) { /* channel might be closed if earlier bug */ }
