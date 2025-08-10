@@ -4,7 +4,9 @@
         "noEmit": false,
         "outDir": "dist",
         "declaration": true,
-        "emitDeclarationOnly": false
+        "emitDeclarationOnly": false,
+        "types": []
+        // Override "types" to prevent including 'node' types
     },
     "include": [
         "src"
