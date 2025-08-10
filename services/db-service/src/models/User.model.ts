@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { User } from '../types/User.js';
+import { User } from '@bridgepoint/types';
 
 const UserSchema = new Schema<User>({
     firstName: {

@@ -1,4 +1,4 @@
-import { FullName } from "../types/FullName.js";
+import { FullName } from "@bridgepoint/types";
 
 export const resetPasswordMail = (email: string, name: FullName, newPassword: string) => {
     return {

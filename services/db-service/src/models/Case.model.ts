@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
-import { UserModel } from './User.model.js'; // Make sure path is correct
-import type { Case } from '../types/Case.js';
+import { UserModel } from './User.model.js';
+import type { Case } from '@bridgepoint/types';
 
 const CaseSchema = new Schema<Case>({
     caseId: { type: String, required: true, unique: true },

@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/node':
+        specifier: ^24.2.1
+        version: 24.2.1
       tsx:
         specifier: ^4.20.3
         version: 4.20.3
@@ -33,11 +36,20 @@ importers:
 
   packages/tsconfig: {}
 
+  packages/types:
+    devDependencies:
+      mongoose:
+        specifier: ^8.17.1
+        version: 8.17.1
+
   services/auth-service:
     dependencies:
       '@bridgepoint/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@bridgepoint/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@types/amqplib':
         specifier: ^0.10.7
         version: 0.10.7
@@ -72,6 +84,9 @@ importers:
       '@bridgepoint/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@bridgepoint/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       amqplib:
         specifier: ^0.10.8
         version: 0.10.8
@@ -103,6 +118,9 @@ importers:
       '@bridgepoint/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@bridgepoint/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       amqplib:
         specifier: ^0.10.8
         version: 0.10.8
@@ -140,6 +158,9 @@ importers:
       '@bridgepoint/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@bridgepoint/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@types/amqplib':
         specifier: ^0.10.7
         version: 0.10.7
@@ -180,6 +201,9 @@ importers:
       '@bridgepoint/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@bridgepoint/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@types/amqplib':
         specifier: ^0.10.7
         version: 0.10.7

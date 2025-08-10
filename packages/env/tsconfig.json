@@ -1,12 +1,10 @@
 {
+  "extends": "../tsconfig/tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "strict": true,
-    "declaration": true,
+    "noEmit": false,
     "outDir": "dist",
-    "skipLibCheck": true
+    "declaration": true,
+    "emitDeclarationOnly": false
   },
   "include": [
     "src"

@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import { SecretTypes } from "../types/SecretTypes.js";
+import { TokenTypes } from "@bridgepoint/types";
 import { env } from "../env.js";
 
 const { JWT_SECRET, MAIL_SECRET, PASSWORD_RESET_KEY, SECURITY_KEY } = env;
 
-const getSecret = (type: SecretTypes = "auth"): string => {
+const getSecret = (type: TokenTypes = "auth"): string => {
     switch (type) {
         case "register":
             if (!MAIL_SECRET) throw new Error("MAIL_SECRET is undefined");
@@ -24,7 +24,7 @@ const getSecret = (type: SecretTypes = "auth"): string => {
 
 const generateToken = (
     _id: string,
-    type: SecretTypes = "auth",
+    type: TokenTypes = "auth",
     expiresIn: jwt.SignOptions["expiresIn"] = "15m"
 ): string => {
     const secret = getSecret(type) as jwt.Secret;
@@ -32,7 +32,7 @@ const generateToken = (
     return jwt.sign({ _id }, secret, options);
 };
 
-const verifyToken = (tokenFromClient: string, type: SecretTypes = "auth") => {
+const verifyToken = (tokenFromClient: string, type: TokenTypes = "auth") => {
     try {
         return jwt.verify(tokenFromClient, getSecret(type));
     } catch (error) {
@@ -42,14 +42,14 @@ const verifyToken = (tokenFromClient: string, type: SecretTypes = "auth") => {
 
 const generateRefreshToken = (
     _id: string,
-    type: SecretTypes = "auth"
+    type: TokenTypes = "auth"
 ): string => {
     const secret = getSecret(type) as jwt.Secret;
     const options: jwt.SignOptions = { expiresIn: "7d" };
     return jwt.sign({ _id }, secret, options);
 };
 
-const refreshToken = (tokenFromClient: string, type: SecretTypes = "auth") => {
+const refreshToken = (tokenFromClient: string, type: TokenTypes = "auth") => {
     const payload = verifyToken(tokenFromClient, type);
     if (!payload) return null;
 

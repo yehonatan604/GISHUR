@@ -1,9 +1,9 @@
-export interface CaseSide {
+export type CaseSide = {
     title: string;
     arguments: string[];
 }
 
-export interface CasePayload {
+export type CasePayload = {
     caseId: string;
     user1: string;
     user2: string;

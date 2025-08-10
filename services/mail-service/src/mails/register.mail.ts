@@ -1,5 +1,5 @@
 import { env } from "../env.js";
-import { FullName } from "../types/FullName.js";
+import { FullName } from "@bridgepoint/types";
 const { API_URL } = env;
 
 export const registerMail = (email: string, name: FullName, token: string) => {

@@ -4,7 +4,7 @@ import { resetPasswordMail } from '../mails/resetPassword.mail.js';
 import { manyAttemptsMail } from '../mails/manyAttempts.mail.js';
 import { forgotPasswordrMail } from '../mails/forgotPassword.mail.js';
 import { registerMail } from '../mails/register.mail.js';
-import { MailFunction, ResetPasswordMailFunction } from '../types/MailFunction.js';
+import { MailFunction, ResetPasswordMailFunction } from '@bridgepoint/types';
 import { env } from '../env.js';
 
 const QUEUE = 'send_mail_queue';

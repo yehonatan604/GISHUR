@@ -1,6 +1,6 @@
 // types/User.ts
 import { HydratedDocument, Types } from "mongoose";
-import { Case } from "./Case";
+import { Case } from "../cases/Case.js";
 
 export type User = {
     _id?: string;

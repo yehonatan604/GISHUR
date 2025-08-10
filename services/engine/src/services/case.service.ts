@@ -1,5 +1,5 @@
 import { channel } from '../infrastructure/messageBroker.js';
-import { CasePayload } from '../types/CasePayload.js';
+import { CasePayload } from '@bridgepoint/types';
 import { randomUUID } from 'crypto';
 
 const CASE_QUEUE = 'case_queue';

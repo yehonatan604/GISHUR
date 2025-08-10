@@ -1,6 +1,7 @@
 {
   "extends": "../../packages/tsconfig/tsconfig.base.json",
   "include": [
-    "src"
+    "src",
+    "../../packages/types/src/users/TokenTypes.ts"
   ]
 }
