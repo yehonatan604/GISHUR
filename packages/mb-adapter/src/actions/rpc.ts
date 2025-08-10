@@ -4,11 +4,10 @@ type Resolver = (data: any) => void;
 type Rejecter = (err: any) => void;
 
 type RpcClientOptions = {
-    defaultTimeoutMs?: number;      // ברירת מחדל ל-timeout
-    replyQueue?: string;            // אפשרות להחליף את direct-reply-to אם תרצה
+    defaultTimeoutMs?: number;
+    replyQueue?: string;
 };
 
-// שומר צרכן יחיד ל-reply-to לכל Channel; בטוח לקריאה חוזרת.
 export class RpcClient {
     private pending = new Map<string, { resolve: Resolver; reject: Rejecter; timer: NodeJS.Timeout }>();
     private replyConsumerReady = false;
@@ -18,6 +17,20 @@ export class RpcClient {
     constructor(private ch: any, opts: RpcClientOptions = {}) {
         this.replyQueue = opts.replyQueue ?? "amq.rabbitmq.reply-to";
         this.defaultTimeoutMs = opts.defaultTimeoutMs ?? 14_000;
+
+        // אם הערוץ נסגר – ננקה הבטחות ממתינות
+        try {
+            this.ch.on?.("close", () => this.flushPending(new Error("RPC channel closed")));
+            this.ch.on?.("error", (e: any) => this.flushPending(e instanceof Error ? e : new Error(String(e))));
+        } catch { }
+    }
+
+    private flushPending(err: Error) {
+        for (const [cid, entry] of this.pending) {
+            clearTimeout(entry.timer);
+            entry.reject(err);
+            this.pending.delete(cid);
+        }
     }
 
     private ensureReplyConsumer() {
@@ -40,7 +53,7 @@ export class RpcClient {
                     const data = JSON.parse(msg.content.toString());
                     entry.resolve(data);
                 } catch (e) {
-                    entry.reject(e);
+                    entry.reject(e instanceof Error ? e : new Error(String(e)));
                 }
             },
             { noAck: true }
@@ -65,7 +78,12 @@ export class RpcClient {
             this.ch.sendToQueue(
                 queue,
                 Buffer.from(JSON.stringify(payload)),
-                { replyTo: this.replyQueue, correlationId }
+                {
+                    replyTo: this.replyQueue,
+                    correlationId,
+                    expiration: String(to),                 // ← TTL ברוקר תואם ל-timeout
+                    contentType: "application/json"         // אופציונלי, נוח לדיבוג
+                }
             );
         });
     }
