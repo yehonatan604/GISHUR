@@ -13,9 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@bridgepoint/env": "workspace:*",
+    "@bridgepoint/mb-adapter": "workspace:*",
     "@bridgepoint/types": "workspace:*",
-    "@types/amqplib": "^0.10.7",
-    "amqplib": "^0.10.8",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",

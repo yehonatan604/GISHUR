@@ -1,42 +1,16 @@
 import { cache } from './infrastructure/cache.js';
-import { caseService } from './services/case.service.js';
+import { initMessageBroker } from './infrastructure/messageBroker.js';
 
 const startEngine = async () => {
     try {
-        // Redis
-        await cache.set('hello', 'world');
-        const value = await cache.get('hello');
-        console.log(value);
-        await cache.del('hello');
+        await cache.set('test', '✅ Redis Cache is Ready');
+        console.log(await cache.get('test'));
+        await cache.del('test');
 
-        // RabbitMQ
-        await caseService.initQueue(); // Initialize the case queue
-        caseService.publishCase({ // Publish a sample case
-            caseId: 'case-001',
-            user1: '68959594ca8706a2a51b7467',
-            user2: '68959594ca8706a2a51b7467',
-            timestamp: Date.now(),
-            sideA: {
-                title: 'Vacation in Hawaii',
-                arguments: [
-                    'Great waves for surfing',
-                    'There is a special deal with El Al',
-                    'My friends are going there too'
-                ]
-            },
-            sideB: {
-                title: 'Vacation in Madagascar',
-                arguments: [
-                    'Less crowded and commercialized',
-                    'Cheaper overall',
-                    'Stable weather this season'
-                ]
-            }
-        });
-        caseService.consumeCases(); // Start consuming cases
+        await initMessageBroker();
     } catch (err) {
         console.error('❌ Engine error:', err);
     }
-}
+};
 
 startEngine();

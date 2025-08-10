@@ -1,8 +1,8 @@
-import { initAuthListener } from "./infrastructure/messageBroker.js";
+import { initMessageBroker } from "./infrastructure/messageBroker.js";
 
 (async () => {
     try {
-        await initAuthListener();
+        await initMessageBroker();
         console.log("✅ Auth service initialized successfully");
     } catch (err) {
         console.error("❌ Failed to init auth listener:", err);

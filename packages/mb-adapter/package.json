@@ -1,0 +1,29 @@
+{
+    "name": "@bridgepoint/mb-adapter",
+    "version": "0.1.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "sideEffects": false,
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "pnpm run clean && tsc -p tsconfig.json"
+    },
+    "dependencies": {
+        "amqplib": "^0.10.3"
+    },
+    "devDependencies": {
+        "@types/amqplib": "^0.10.7",
+        "rimraf": "^5.0.5",
+        "typescript": "^5.9.2"
+    }
+}

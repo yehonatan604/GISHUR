@@ -13,13 +13,12 @@
   "license": "ISC",
   "dependencies": {
     "@bridgepoint/env": "workspace:*",
+    "@bridgepoint/mb-adapter": "workspace:*",
     "@bridgepoint/types": "workspace:*",
-    "amqplib": "^0.10.8",
     "dotenv": "^17.2.1",
     "mongoose": "^8.17.1"
   },
   "devDependencies": {
-    "@types/amqplib": "^0.10.7",
     "@types/node": "^24.2.0",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.20.3",

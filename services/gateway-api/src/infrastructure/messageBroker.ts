@@ -1,10 +1,16 @@
-import amqp from 'amqplib';
-import { RpcClient } from './RpcClient.js';
+// services/gateway-api/src/infrastructure/messageBroker.ts
 import { env } from '@bridgepoint/env';
+import { getPersistentChannel, RpcClient } from '@bridgepoint/mb-adapter';
 
-const { MESSAGE_BROKER_URL } = env;
-const connection = await amqp.connect(MESSAGE_BROKER_URL);
-const channel = await connection.createChannel();
-const rpc = new RpcClient(channel);
+let rpc: RpcClient | null = null;
 
-export { channel, connection, rpc };
+export const initMessageBroker = async () => {
+    const ch = await getPersistentChannel(env.MESSAGE_BROKER_URL!);
+    rpc = new RpcClient(ch, { defaultTimeoutMs: 14_000 }); // אופציונלי
+    console.log('✅ Connected to RabbitMQ (Gateway API) using persistent channel');
+};
+
+export function getRpcClient(): RpcClient {
+    if (!rpc) throw new Error('RabbitMQ not initialized. Call initMessageBroker() first.');
+    return rpc;
+}

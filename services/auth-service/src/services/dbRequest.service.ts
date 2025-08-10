@@ -1,8 +1,8 @@
-import amqp from 'amqplib';
+// services/auth-service/src/services/dbRequest.service.ts
 import { randomUUID } from 'crypto';
 
 export async function requestUserFromDb(
-    ch: amqp.Channel,
+    ch: any,
     email: string
 ): Promise<{ _id: string; password: string } | null> {
     const { queue: replyQ } = await ch.assertQueue('', { exclusive: true, durable: false, autoDelete: true });
@@ -16,12 +16,11 @@ export async function requestUserFromDb(
 
         const { consumerTag: tag } = await ch.consume(
             replyQ,
-            async (msg) => {
+            async (msg: any) => {
                 if (!msg || msg.properties.correlationId !== cid) return;
                 clearTimeout(to);
                 try {
                     const data = JSON.parse(msg.content.toString());
-                    // מצפה ל-{ user: {...} }
                     resolve(data.user ?? null);
                 } catch {
                     resolve(null);
