@@ -6,7 +6,6 @@ import { z } from "zod";
 let hydrated = false;
 
 function repoRootFromCwd(cwd = process.cwd()) {
-    // אם רץ מתוך services/<svc> נחזור שתי תיקיות, אחרת נשאר
     return cwd.includes(`${path.sep}services${path.sep}`)
         ? path.resolve(cwd, "..", "..")
         : cwd;
@@ -21,11 +20,9 @@ function hydrateProcessEnv() {
         const p = path.join(root, name);
         if (fs.existsSync(p)) loadEnv({ path: p, override: false });
     }
-    // .env מקומי של השירות (אם יש) – דריסה
     loadEnv({ override: true });
 }
 
-// גנרטור כללי ל-env טיפוסי
 export function buildEnv<T extends z.ZodRawShape>(
     schema: z.ZodObject<T>
 ): z.infer<typeof schema> {
