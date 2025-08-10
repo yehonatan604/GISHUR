@@ -8,7 +8,7 @@ Services share **TypeScript config**, a **central env loader**, and **shared typ
 ## 📂 Project Structure
 
 ``` bash
-GISHUR/
+BRIDGEPOINT/
 ├─ packages/
 │  ├─ env/        # Shared env loader (@bridgepoint/env)
 │  ├─ tsconfig/   # Shared TS configs (@bridgepoint/tsconfig)
