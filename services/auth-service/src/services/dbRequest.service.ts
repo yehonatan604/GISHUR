@@ -1,10 +1,10 @@
 // services/auth-service/src/services/dbRequest.service.ts
 import { randomUUID } from 'crypto';
 
-export async function requestUserFromDb(
+export const requestUserFromDb = async (
     ch: any,
     email: string
-): Promise<{ _id: string; password: string } | null> {
+): Promise<{ _id: string; password: string } | null> => {
     const { queue: replyQ } = await ch.assertQueue('', { exclusive: true, durable: false, autoDelete: true });
     const cid = randomUUID();
 

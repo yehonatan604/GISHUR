@@ -1,13 +1,9 @@
 import * as amqp from "amqplib";
 
-/**
- * Opens a connection + channel, runs your fn, and closes gracefully.
- * Services do NOT need to import amqplib.
- */
-export async function withChannel<T>(
+export const withChannel = async <T>(
     url: string,
-    fn: (ch: any, conn: any) => Promise<T> // intentionally "any" to avoid leaking amqplib types
-): Promise<T> {
+    fn: (ch: any, conn: any) => Promise<T>
+): Promise<T> => {
     const conn = await amqp.connect(url);
     const ch = await conn.createChannel();
 

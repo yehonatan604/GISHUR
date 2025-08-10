@@ -1,11 +1,11 @@
 import amqp from "amqplib";
 import { Topology } from "../types/types.js";
 
-export async function assertTopology(
+export const assertTopology = async (
     ch: amqp.Channel,
     namespace: string,
     retryDelayMs: number
-): Promise<Topology> {
+): Promise<Topology> => {
     const mainEx = `${namespace}.x`;
     const retryEx = `${namespace}.x.retry`;
     const dlxEx = `${namespace}.x.dlx`;

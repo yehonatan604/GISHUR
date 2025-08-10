@@ -1,17 +1,17 @@
+import { z } from "@bridgepoint/zod-schemas";
 import { config as loadEnv } from "dotenv";
 import fs from "fs";
 import path from "path";
-import { z } from "zod";
 
 let hydrated = false;
 
-function repoRootFromCwd(cwd = process.cwd()) {
+const repoRootFromCwd = (cwd = process.cwd()) => {
     return cwd.includes(`${path.sep}services${path.sep}`)
         ? path.resolve(cwd, "..", "..")
         : cwd;
-}
+};
 
-function hydrateProcessEnv() {
+const hydrateProcessEnv = () => {
     if (hydrated) return;
     hydrated = true;
 
@@ -21,11 +21,11 @@ function hydrateProcessEnv() {
         if (fs.existsSync(p)) loadEnv({ path: p, override: false });
     }
     loadEnv({ override: true });
-}
+};
 
-export function buildEnv<T extends z.ZodRawShape>(
+const buildEnv = <T extends z.ZodRawShape>(
     schema: z.ZodObject<T>
-): z.infer<typeof schema> {
+): z.infer<z.ZodObject<T>> => {
     hydrateProcessEnv();
     const parsed = schema.safeParse(process.env);
     if (!parsed.success) {
@@ -34,7 +34,7 @@ export function buildEnv<T extends z.ZodRawShape>(
             .join("\n");
         throw new Error(`Invalid environment configuration:\n${issues}`);
     }
-    return Object.freeze(parsed.data) as z.infer<typeof schema>;
+    return Object.freeze(parsed.data) as z.infer<z.ZodObject<T>>;
 }
 
-export { z };
+export { z, buildEnv };

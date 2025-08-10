@@ -1,4 +1,4 @@
-import { z } from "./core.js";
+import { z } from "zod";
 
 export const BaseEnvSchema = z.object({
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
@@ -28,5 +28,3 @@ export const BaseEnvSchema = z.object({
     PASSWORD_RESET_KEY: z.string().min(1, "PASSWORD_RESET_KEY is required"),
     SECURITY_KEY: z.string().min(1, "SECURITY_KEY is required"),
 });
-
-export type BaseEnv = z.infer<typeof BaseEnvSchema>;

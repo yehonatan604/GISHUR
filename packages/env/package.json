@@ -14,6 +14,7 @@
         "build": "tsc -p tsconfig.json"
     },
     "dependencies": {
+        "@bridgepoint/zod-schemas": "workspace:*",
         "dotenv": "^16.6.1",
         "zod": "^3.25.76"
     },

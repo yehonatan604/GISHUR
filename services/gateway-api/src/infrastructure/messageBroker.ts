@@ -1,4 +1,3 @@
-// services/gateway-api/src/infrastructure/messageBroker.ts
 import { env } from '@bridgepoint/env';
 import { getPersistentChannel, RpcClient } from '@bridgepoint/mb-adapter';
 

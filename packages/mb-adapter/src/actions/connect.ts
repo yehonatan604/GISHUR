@@ -11,11 +11,11 @@ export type MessagingHandle = {
     close: () => Promise<void>;
 };
 
-export async function connectAndSetup(
+export const connectAndSetup = async (
     url: string,
     namespace: string,
     retryDelayMs = 30_000
-): Promise<MessagingHandle> {
+): Promise<MessagingHandle> => {
     const conn = await amqp.connect(url);
     const ch = await conn.createChannel();
     const topology = await assertTopology(ch, namespace, retryDelayMs);

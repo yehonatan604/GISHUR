@@ -1,13 +1,12 @@
 import amqp from 'amqplib';
 
-// הגדרות טיפוסים מדויקות
 type AmqpConnection = Awaited<ReturnType<typeof amqp.connect>>;
 type AmqpChannel = Awaited<ReturnType<AmqpConnection['createChannel']>>;
 
 let connection: AmqpConnection | null = null;
 let channel: AmqpChannel | null = null;
 
-export async function getPersistentChannel(url: string): Promise<AmqpChannel> {
+export const getPersistentChannel = async (url: string): Promise<AmqpChannel> => {
     if (channel) return channel;
 
     connection = await amqp.connect(url);
@@ -15,11 +14,11 @@ export async function getPersistentChannel(url: string): Promise<AmqpChannel> {
 
     console.log('🐑 Persistent channel established');
     return channel;
-}
+};
 
-export async function closePersistentChannel() {
+export const closePersistentChannel = async () => {
     try { await channel?.close(); } catch { }
     try { await connection?.close(); } catch { }
     channel = null;
     connection = null;
-}
+};

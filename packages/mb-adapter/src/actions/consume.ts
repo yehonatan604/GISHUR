@@ -1,12 +1,12 @@
 import amqp from "amqplib";
 import { Topology, RetryOptions } from "../types/types.js";
 
-export function consumeWithRetry(
+export const consumeWithRetry = (
     ch: amqp.Channel,
     t: Topology,
     handler: (msg: amqp.ConsumeMessage) => Promise<void>,
     opts: RetryOptions
-) {
+) => {
     ch.consume(t.mainQ, async (msg) => {
         if (!msg) return;
         try {

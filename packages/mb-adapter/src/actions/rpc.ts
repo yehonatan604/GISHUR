@@ -18,7 +18,6 @@ export class RpcClient {
         this.replyQueue = opts.replyQueue ?? "amq.rabbitmq.reply-to";
         this.defaultTimeoutMs = opts.defaultTimeoutMs ?? 14_000;
 
-        // אם הערוץ נסגר – ננקה הבטחות ממתינות
         try {
             this.ch.on?.("close", () => this.flushPending(new Error("RPC channel closed")));
             this.ch.on?.("error", (e: any) => this.flushPending(e instanceof Error ? e : new Error(String(e))));
@@ -81,21 +80,20 @@ export class RpcClient {
                 {
                     replyTo: this.replyQueue,
                     correlationId,
-                    expiration: String(to),                 // ← TTL ברוקר תואם ל-timeout
-                    contentType: "application/json"         // אופציונלי, נוח לדיבוג
+                    expiration: String(to),
+                    contentType: "application/json"
                 }
             );
         });
     }
 }
 
-// helper אופציונלי לשימוש מהיר
-export async function rpcRequest<TReq, TRes>(
+export const rpcRequest = async <TReq, TRes>(
     ch: any,
     queue: string,
     payload: TReq,
     timeoutMs?: number
-): Promise<TRes> {
+): Promise<TRes> => {
     const client = new RpcClient(ch);
     return client.request<TReq, TRes>(queue, payload, timeoutMs);
 }

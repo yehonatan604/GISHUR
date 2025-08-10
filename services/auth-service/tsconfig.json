@@ -1,7 +1,12 @@
 {
   "extends": "../../packages/tsconfig/tsconfig.base.json",
   "include": [
-    "src",
-    "../../packages/types/src/users/TokenTypes.ts"
-  ]
+    "src"
+  ],
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "dist",
+    "declaration": false,
+    "sourceMap": false
+  }
 }

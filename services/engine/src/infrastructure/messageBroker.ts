@@ -62,16 +62,16 @@ export const initMessageBroker = async () => {
     });
 };
 
-function publishCase(channel: any, payload: CasePayload) {
+const publishCase = (channel: any, payload: CasePayload) => {
     channel.sendToQueue(CASE_QUEUE, Buffer.from(JSON.stringify(payload)), { persistent: true });
     console.log(`📤 Case published to ${CASE_QUEUE}`);
 }
 
-async function handleCaseMessage(
+const handleCaseMessage = async (
     channel: any,
     pendingResponses: Map<string, (data: any) => void>,
     caseData: CasePayload
-) {
+) => {
     console.log('📥 Handling case:', caseData.caseId);
 
     const existing = await sendDbCommand(channel, pendingResponses, {
@@ -93,11 +93,11 @@ async function handleCaseMessage(
     }
 }
 
-function sendDbCommand(
+const sendDbCommand = (
     channel: any,
     pendingResponses: Map<string, (data: any) => void>,
     command: any
-): Promise<any> {
+): Promise<any> => {
     const correlationId = randomUUID();
 
     return new Promise((resolve) => {
