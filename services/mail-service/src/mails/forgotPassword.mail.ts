@@ -1,5 +1,6 @@
-import { env } from "../env.js";
+import { env } from "@bridgepoint/env";
 import { FullName } from "@bridgepoint/types";
+
 const { API_URL } = env;
 
 export const forgotPasswordrMail = (email: string, name: FullName, token: string) => {

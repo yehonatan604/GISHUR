@@ -1,6 +1,6 @@
 import amqp, { ConsumeMessage } from 'amqplib';
 import { UserModel } from '../models/User.model.js';
-import { env } from '../env.js';
+import { env } from '@bridgepoint/env';
 
 export const startConsumer = async () => {
     const connection = await amqp.connect(env.MESSAGE_BROKER_URL);

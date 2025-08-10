@@ -1,6 +1,6 @@
 import nodemailer, { Transporter, SendMailOptions } from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport/index.js";
-import { env } from "../env.js";
+import { env } from "@bridgepoint/env";
 
 const {
     MAIL_HOST,

@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import { env } from '../env.js';
+import { env } from '@bridgepoint/env';
 
 const { CACHE_URL: url } = env;
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { seedUsers } from '../services/seed.service.js';
-import { env } from '../env.js';
+import { env } from '@bridgepoint/env';
 
 const connectToDb = async () => {
     const { NODE_ENV, DB_URL } = env;

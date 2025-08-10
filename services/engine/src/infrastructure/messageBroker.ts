@@ -1,5 +1,5 @@
 import amqp from 'amqplib';
-import { env } from '../env.js';
+import { env } from '@bridgepoint/env';
 
 const { MESSAGE_BROKER_URL } = env;
 

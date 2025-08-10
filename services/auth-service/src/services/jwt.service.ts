@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { TokenTypes } from "@bridgepoint/types";
-import { env } from "../env.js";
+import { env } from "@bridgepoint/env";
 
 const { JWT_SECRET, MAIL_SECRET, PASSWORD_RESET_KEY, SECURITY_KEY } = env;
 

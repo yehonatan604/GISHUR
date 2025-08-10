@@ -2,7 +2,7 @@ import express from 'express';
 import { appRouter } from './router/app.routes.js';
 import { badPathHandler, errorHandler } from './middlewares/errors.mw.js';
 import { channel } from './infrastructure/messageBroker.js';
-import { env } from './env.js';
+import { env } from '@bridgepoint/env';
 
 const app = express();
 const { PORT } = env;

@@ -2,7 +2,7 @@ import { ConsumeMessage, Channel } from 'amqplib';
 import { verifyPassword } from '../services/hash.service.js';
 import { generateToken } from '../services/jwt.service.js';
 import { requestUserFromDb } from '../services/dbRequest.service.js';
-import { env } from '../env.js';
+import { env } from '@bridgepoint/env';
 import amqp from 'amqplib';
 
 const QUEUE = 'auth_action_queue';
