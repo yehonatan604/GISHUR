@@ -6,7 +6,7 @@ let rpc: RpcClient | null = null;
 
 export const initMessageBroker = async () => {
     const ch = await getPersistentChannel(env.MESSAGE_BROKER_URL!);
-    rpc = new RpcClient(ch, { defaultTimeoutMs: 14_000 }); // אופציונלי
+    rpc = new RpcClient(ch, { defaultTimeoutMs: 7_000 }); // אופציונלי
     console.log('✅ Connected to RabbitMQ (Gateway API) using persistent channel');
 };
 

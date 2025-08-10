@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { catchAsync } from "../middlewares/catchAsync.mw.js";
 import { getRpcClient } from "../infrastructure/messageBroker.js";
+import { validate } from "../middlewares/validation.mw.js";
+import { LoginSchema } from "@bridgepoint/zod-schemas";
 
 const authRouter = Router();
 
@@ -8,18 +10,18 @@ authRouter.post("/", catchAsync(async (req, res) => {
     res.status(200).json({});
 }));
 
-authRouter.post("/login", catchAsync(async (req, res) => {
+authRouter.post("/login", validate("body", LoginSchema), catchAsync(async (req, res) => {
     const { email, password } = req.body;
 
     const rpc = getRpcClient();
-    const token = await rpc.request<typeof req.body, { token?: string; error?: string }>(
-        'auth_action_queue',
-        { type: 'login', email, password },
-        14000
+    const loginResult = await rpc.request<typeof req.body, { token?: string; error?: string }>(
+        "auth_action_queue",
+        { type: "login", email, password },
+        7000
     );
 
-    if (token?.error) return res.status(401).json(token);
-    return res.status(200).json(token);
+    if (loginResult?.error) return res.status(401).json(loginResult);
+    return res.status(200).json(loginResult);
 }));
 
 authRouter.get("/:id", catchAsync(async (req, res) => {
