@@ -1,14 +1,9 @@
-# GISHUR Monorepo
-
-A **pnpm + Turborepo** microservices monorepo for the BridgePoint system.
-Services share **TypeScript config**, a **central env loader**, and **shared types**.
-
----
+# BridgePoint Monorepo
 
 ## 📂 Project Structure
 
 ``` bash
-GISHUR/
+BRIDGEPOINT/
 ├─ packages/
 │  ├─ env/        # Shared env loader (@bridgepoint/env)
 │  ├─ tsconfig/   # Shared TS configs (@bridgepoint/tsconfig)
