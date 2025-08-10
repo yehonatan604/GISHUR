@@ -88,6 +88,9 @@ importers:
       '@bridgepoint/types':
         specifier: workspace:*
         version: link:../../packages/types
+      '@bridgepoint/zod-schemas':
+        specifier: workspace:*
+        version: link:../../packages/zod-schemas
       dotenv:
         specifier: ^17.2.1
         version: 17.2.1

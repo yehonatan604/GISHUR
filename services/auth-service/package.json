@@ -18,6 +18,7 @@
     "@bridgepoint/env": "workspace:*",
     "@bridgepoint/mb-adapter": "workspace:*",
     "@bridgepoint/types": "workspace:*",
+    "@bridgepoint/zod-schemas": "workspace:*",
     "dotenv": "^17.2.1",
     "jsonwebtoken": "^9.0.2"
   },
