@@ -1,4 +1,4 @@
-# GISHUR Monorepo
+# BridgePoint Monorepo
 
 A **pnpm + Turborepo** microservices monorepo for the BridgePoint system.
 Services share **TypeScript config**, a **central env loader**, and **shared types**.
