@@ -8,3 +8,4 @@ export type * from './users/FullName.js';
 export type * from './users/User.js';
 export type * from './users/TokenTypes.js';
 
+export type * from './db/DbResponse.js';
